@@ -37,8 +37,8 @@ $$
 DELIMITER;
 
 --2.b
-CALL inscrire_participant(1, 1);
-CALL inscrire_participant(1, 1);
+CALL inscription_congres(1, 1);
+CALL inscription_congres(1, 1);
 
 --3
 
@@ -81,4 +81,5 @@ OR REPLACE TRIGGER congres_date_insertion BEFORE
 INSERT
 	ON congres FOR EACH ROW
 BEGIN
+
 
