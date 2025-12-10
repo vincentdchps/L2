@@ -51,7 +51,7 @@ DELIMITER ;
 ---
 Question 1-2
 
-```
+```sql
 DELIMITER $$
 
 CREATE TRIGGER modifLigne
