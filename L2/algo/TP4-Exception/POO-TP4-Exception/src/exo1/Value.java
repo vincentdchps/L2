@@ -4,7 +4,7 @@
 package exo1;
 
 /**
- * @author nmessai
+ * 
  *
  */
 public class Value {
