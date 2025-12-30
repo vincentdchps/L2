@@ -116,3 +116,24 @@ public class Exercice2 {
 
 ```
 
+```java
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class Exercice2Test {
+    @Test
+    void testMotDePasse() {
+        Exercice2 mdp1 = new Exercice2("Pass1234");
+        assertEquals("valide", mdp1.getStatut());
+
+        Exercice2 mdp2 = new Exercice2("P12");
+        assertEquals("erreur", mdp2.getStatut());
+
+        Exercice2 mdp3 = new Exercice2("Password1");
+        assertEquals("erreur", mdp3.getStatut());
+
+        Exercice2 mdp4 = new Exercice2("Pass12!!");
+        assertEquals("erreur", mdp4.getStatut());
+    }
+}
+
