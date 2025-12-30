@@ -20,3 +20,23 @@ Va augmenter de 1 jours le délai total du projet car D et H maintenant n'attend
 
 ### 6.
 I n'est pas sur le chemin critique, il est donc inutile de le supprimer car le projet peux pas avancer de toute manière si E (qui termine beaucoup plus tard) n'est pas terminer.
+
+---
+Exercice 2 
+
+###1.
+<img width="1919" height="875" alt="image" src="https://github.com/user-attachments/assets/62f038ad-ad92-43b9-b995-add446600786" />
+
+## 2 et 3.
+
+<img width="1799" height="776" alt="image" src="https://github.com/user-attachments/assets/28d80568-a976-4139-b0a5-22cff84c02bc" />
+
+Chemin critique en rouge, durée minimale: 32 jours.
+
+## 5.
+Impact sur L: démarre toujours à 21 mais fini maintenant à 21+8 = 29. La tache M attend toujours le max(G=18,H=23, I=25, L=29)
+Lz nouveau max devient 29.
+M démarre à 29 au lieu de 25 soit un retard de 4 jours. 
+La durée totale deviens 32+ 4 = 36 jours.
+
+
