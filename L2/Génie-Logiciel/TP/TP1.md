@@ -136,4 +136,102 @@ class Exercice2Test {
         assertEquals("erreur", mdp4.getStatut());
     }
 }
+```
 
+
+### Exercice 3 
+
+## Code.
+
+```java
+public class Exercice3 {
+    private String _nombreExtrait;
+
+    public Exercice3(String texte) {
+        // Initialisation
+        this._nombreExtrait = ""; 
+        StringBuilder buffer = new StringBuilder(); 
+        
+        int state = 1; // 1: RECHERCHE, 2: ENTIER, 3: DECIMAL, 4: FIN
+        int rang = 0;
+
+        while (state != 4) {
+            if (rang >= texte.length()) {
+                state = 4;
+                break;
+            }
+
+            char c = texte.charAt(rang);
+
+            switch (state) {
+                case 1:
+                    if (Character.isDigit(c)) {
+                        buffer.append(c);
+                        state = 2;
+                    }
+                    break;
+
+                case 2: 
+                    if (Character.isDigit(c) || c == ' ') {
+                        buffer.append(c); 
+                    } else if (c == '.' || c == ',') {
+                        buffer.append(c);
+                        state = 3;
+                    } else {
+                        state = 4;
+                    }
+                    break;
+
+                case 3: 
+                    if (Character.isDigit(c) || c == ' ') {
+                        buffer.append(c);
+                    } else {
+                        state = 4; 
+                    }
+                    break;
+            }
+            rang++;
+        }
+        
+        this._nombreExtrait = buffer.toString().trim(); 
+    }
+
+    public String getNombre() {
+        return this._nombreExtrait;
+    }
+}
+
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class Exercice3Test {
+
+    @Test
+    void testExtractionSimple() {
+        Exercice3 ex = new Exercice3("Le prix est de 150 euros");
+        assertEquals("150", ex.getNombre());
+    }
+
+    @Test
+    void testExtractionDecimale() {
+        Exercice3 ex1 = new Exercice3("Valeur: 12.50");
+        assertEquals("12.50", ex1.getNombre());
+
+        Exercice3 ex2 = new Exercice3("Valeur: 12,99");
+        assertEquals("12,99", ex2.getNombre());
+    }
+
+    @Test
+    void testDoubleSeparateur() {
+        Exercice3 ex = new Exercice3("Version 12.5.6");
+        assertEquals("12.5", ex.getNombre());
+    }
+
+    @Test
+    void testEspaces() {
+        Exercice3 ex = new Exercice3("Code 1 000 200 fin");
+        assertEquals("1 000 200", ex.getNombre());
+    }
+}
+```
