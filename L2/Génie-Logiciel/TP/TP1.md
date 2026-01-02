@@ -201,7 +201,8 @@ public class Exercice3 {
     }
 }
 
-
+```
+```java
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -232,6 +233,54 @@ class Exercice3Test {
     void testEspaces() {
         Exercice3 ex = new Exercice3("Code 1 000 200 fin");
         assertEquals("1 000 200", ex.getNombre());
+    }
+}
+```
+
+### Exercice 4 
+
+```java
+import java.util.Vector;
+
+public class Exercice4 {
+    private Vector<Integer> _occurrences;
+    private String _motCible;
+
+    public Exercice4(String texte, String mot) {
+        this._motCible = mot;
+        this._occurrences = new Vector<Integer>();
+
+        if (texte == null || mot == null || texte.length() == 0 || mot.length() == 0) {
+            return;
+        }
+        int state = 0; 
+
+        // Parcours du texte source
+        for (int i = 0; i < texte.length(); i++) {
+            char c = texte.charAt(i);
+            
+            if (c == _motCible.charAt(state)) {
+                state++; 
+                if (state == _motCible.length()) {
+                    this._occurrences.add(positionDebut);
+                    state = 0; 
+                }
+            } else {
+                if (c == _motCible.charAt(0)) {
+                    state = 1;
+                } else {
+                    state = 0;
+                }
+            }
+        }
+    }
+
+    public int getNombreOccurrences() {
+        return this._occurrences.size();
+    }
+
+    public Vector<Integer> getPositions() {
+        return this._occurrences;
     }
 }
 ```
