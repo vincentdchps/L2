@@ -14,6 +14,12 @@
 ### 1. Inscription et gestion du profil
 
 
+### Recensement cas d'utilisation et description
+
+
+<img width="845" height="492" alt="image" src="https://github.com/user-attachments/assets/afe78aa4-2058-4935-9bab-9fbb3830b0d3" />
+
+
 Description : 
 
 Nom du Cas : S'inscrire
@@ -55,16 +61,15 @@ Scénario:
      - Le profil Passager est créé en base de données avec ses préférences.
      - Le Passager est authentifié et redirigé vers l'accueil.
 
-### Recensement cas d'utilisation et description
-
 
 
 ### Diagramme de séquence 
 
-<img width="977" height="461" alt="image" src="https://github.com/user-attachments/assets/673c9419-5e77-41be-98f5-b22d8ae3b2fb" />
+<img width="1477" height="752" alt="image" src="https://github.com/user-attachments/assets/9f087b47-2065-4f45-bdcc-ff3c42ebcf1b" />
 
 
 ### Version raffiné : 
 
-<img width="1415" height="907" alt="image" src="https://github.com/user-attachments/assets/44a169d8-019d-474a-8c1c-809159fbed13" />
+<img width="1322" height="878" alt="image" src="https://github.com/user-attachments/assets/757eaf0c-bc7a-4764-968a-0bcec1473f79" />
+
 
