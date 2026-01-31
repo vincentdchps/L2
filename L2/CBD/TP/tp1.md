@@ -106,3 +106,53 @@ WHERE cup = 2010 AND (team1 = 'France' OR team2 = 'France');
 ```sql
 SELECT DISTINCT winner FROM A_TOP;
 ```
+
+### 12. (a) Quelles équipes ont gagné au moins une fois une coupe et ont organisé au moins une coupe (pas forcement la même) ?
+
+```sql
+SELECT DISTINCT winner
+FROM A_TOP
+WHERE host LIKE CONCAT('%', winner, '%');
+```
+
+### 13. (b) Quelles équipes ont gagné plusieurs coupes ?
+
+```sql
+SELECT winner
+FROM A_TOP
+GROUP BY winner
+HAVING COUNT(*) > 1;
+```
+
+### 14. (b) Quelle équipe a gagné la première coupe ?
+
+```sql
+SELECT winner
+FROM A_TOP 
+WHERE cup = (SELECT MIN(cup) FROM A_TOP);
+```
+
+### 15.(c) Quelles équipes européennes ont gagné au moins une fois une coupe ?
+
+```sql
+SELECT DISTINCT T.winner
+FROM A_TOP T, A_TEAMS TM
+WHERE TM.continent = 'Europe' 
+  AND TM.teams LIKE CONCAT('%', T.winner, '%');
+```
+### 16.(d) Quelles équipes apparaissent plusieurs fois dans le palmarès ?
+
+```sql
+SELECT team, COUNT(*) as nb_fois
+FROM (
+    SELECT winner as team FROM A_TOP
+    UNION ALL
+    SELECT runnerUp FROM A_TOP
+    UNION ALL
+    SELECT thirdPlace FROM A_TOP
+    UNION ALL
+    SELECT fourthPlace FROM A_TOP
+) as Palmares
+GROUP BY team
+HAVING COUNT(*) > 1;
+```
