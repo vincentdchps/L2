@@ -16,8 +16,10 @@ class AuthorFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
+          return [
+            'name' => fake()->lastName(),
+            'firstname' => fake()->firstName(),
+            'biography' => fake()->text($maxNbChars = 200),
         ];
     }
 }

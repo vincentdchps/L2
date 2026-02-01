@@ -11,7 +11,8 @@ class AuthorSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        //
+    { 
+        \App\Models\Author::factory(20)->create();
+    
     }
 }
