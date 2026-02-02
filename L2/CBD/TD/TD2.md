@@ -100,6 +100,72 @@
 - AB -> CD et CD -> CE donc AB -> CE
 - AB -> CE et CE -> GH donc AB -> GH
 
+# 2 Propriétés des Dépendances Fonctionnelles
+
+## Exercice 6 
+
+### Soit la relation R(A,B,C,D,E,F) avec les Dfs F = {A −→ BC,E −→ CF,B −→ E,CD −→ EF}. Calculer la fermeture {A,B}+ de l'ensemble des attributs {A,B} pour cet ensemble de Df F.
+
+- Etape 0 : {A, B}
+
+-   Etape 1 :
+      -  A - > BC donc { A, B, C}
+      - E -> CF donc { A, B, C }
+      -  B -> E donc { A, B, C , E}
+      -  CD -> EF donc { A, B, C , E}
+ 
+- Etape 2 :
+   - E -> CF donc { A, B, C , E, F}
+   - CD -> EF donc { A, B, C , E, F}
+ 
+$$\{A, B}^+ = \{A, B, C, E, F\}$$
+
+
+## Exercice 7 
+
+### Soit la relation R(A,B,C,D,E,F,G) avec les Dfs F = {AC −→ B,BC −→ DE,AEF −→ G} Calculer la fermeture {A,C}+ de l'ensemble des attributs {A,C} pour cet ensemble de Df F.
+
+- Etape 0 : {A, C}
+  
+- Etape 1 :
+    - AC -> B donc { A,B,C}
+    - BC -> DE donc { A, B, C , D , E }
+    - AEF -> G donc { A, B, C , D , E }
+ 
+  $$\{A, C\}^+ = \{A, B, C, D, E\}$$
+
+  ## Exercice 8
+
+  ### Soit la relation R(A,B,C,D,E) avec les Dfs F = {A −→ CD,C −→ BDE,D −→ CE} 1. Donner deux couvertures minimales de F
+
+ - Etape 1 : Decomposition de F
+    - A -> C
+    - A -> D
+    - C -> B
+    - C -> D
+    - C -> E
+    - D -> C
+    - D -> E
+
+- Etape 2 : Rechercher redondance
+    - On a A -> C et C -> D donc A -> D inutile
+    - On a A -> D et D -> C donc A -> C inutile
+    - On a C -> et D -> E donc C -> E inutile
+        
+
+  
+
+  
+    
+
+
+
+
+
+    
+
+  
+
 
 
 
