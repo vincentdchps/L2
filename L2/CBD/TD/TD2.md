@@ -198,6 +198,123 @@ $A^+ = \{A, B, C, D\}$
   - Couverture minimale 2 : { A -> B , B -> C , C -> B }
  
 
+## Exercice 11
+### Soit la relation R(A,B,C,D) avec les Dfs F = {A −→ B,B −→ A,B −→ C,A −→ C} 1. Produisez une couverture minimale pour F ;
+
+
+- Etape 1 : atomisation
+  - A -> B
+  - B -> A
+  - B -> C
+  - A -> C
+ 
+- Etape 2 : Recherche redondance
+  - On a A -> B et B -> C donc A -> C inutile
+  - On a B -> A et A -> C donc B -> C inutile
+  - Couverture minimale 1 : { A-> B ,B -> A , B -> C }
+  - Couverture minimale 2 : { A-> B ,B -> A , A -> C }
+
+
+### 2. La dépendance AB −→ C est-elle pleine?
+
+Une DF X -> Y est pleine si Y dépend de tout X , et pas seulement d'une partie de X.
+On a A -> C et B -> C donc non C ne dépend pas de tout AB. 
+Dépendance donc pas pleine
+
+### 3. La dépendance A −→ AC est-elle élémentaire?
+
+Une DF est élémentaire si :
+
+- La partie droite est un attribut unique.
+
+- La partie droite n'est pas incluse dans la partie gauche .
+
+- La dépendance est pleine.
+
+la partie droite est A -> C. Elle contient A, qui est déjà à gauche. C'est une dépendance partiellement trivial .De plus, la partie droite n'est pas atomique.
+Donc non élémentaire
+
+### 4. La dépendance A −→ C est-elle élémentaire?
+
+Partie droite C est un attribut unique. C n'est pas dans A .Partie gauche A est un singleton, on ne peut pas faire plus petit, donc la dépendance est forcément pleine. Donc oui, elle est élémentaire.
+
+
+
+### 5. Calculez {A}+, {B}+;
+
+- Etape 0 : {A} 
+  - A -> B donc { A, B }
+  - B -> C donc { A, B , C }
+   - {A}+ = { A, B , C }
+
+- Etape 0 : { B }
+- A -> B donc {B}
+- B -> A donc { B ,A }
+- B -> C donc { A , B , C }
+  -  {B}+ = { A, B , C }
+
+    
+### 6. Déterminer si F |= A −→ BC
+
+- {A}+ = { A, B , C } donc A détermine BC
+- Donc oui F implique  A -> BC
+
+## Exercice 12.
+### Soit la relation R(A,B,C,D,E,G) avec les Dfs F = {AB −→ C,C −→ A,BC −→ D,ACD −→ B,D −→ EG,BE −→C,CG−→BD,CE −→AG} 1. Montrer que les Dfs CE −→ A et CG −→ B sont redondantes;
+
+- CE -> A
+  - C -> A donc E inutile dans CE-> A donc oui CE -> A est redondant
+
+- CG -> B
+  - On calcule {C ,G } +
+  - On a C -> A donc { C, G, A }
+  - On CG -> BD donc { C,G, A, D }
+  - On a ACD -> B donc { C, G, A , D }
+  - Donc puisque on a réussi à obtenir B avec le chemin CG -> D et ACD -> B , CG -> B est redondant.
+
+### 2. En déduire une couverture minimale de F ;
+
+- Atomisation :
+  - AB -> C
+  - C -> A
+  - BC -> D
+  - ACD -> B
+  - D -> E
+  - D -> G
+  - BE -> C
+  - CG -> D
+  - CE -> G
+ 
+  ### 3. Montrer qu'il y a un attribut superflu dans ACD −→ B;
+
+On regarde la règle ACD ->  B. On se demande si A, C, ou D est inutile à gauche.Testons si A est inutile : On calcule $\{C, D\}^+$ pour voir si on peut récupérer A ou déclencher la règle sans lui.On a C -> A.Donc, si j'ai {C, D} j'obtiens automatiquement A. Mon ensemble devient {A, C, D}.Une fois que j'ai {A, C, D}, la règle ACD -> B se déclenche.Conclusion : Puisque C suffit à déterminer A, écrire A dans la partie gauche de ACD -> B est une répétition.L'attribut A est superflu . La règle se simplifie en CD -> B.
+
+### 4. Donner une couverture minimale de F ;
+
+Nouvelle couverture :{AB -> C, C -> A, BC -> D, CD -> B, D -> E, D -> G, BE -> C, CG -> D, CE -> G}
+  
+### 5. En reprenant F montrer que CG −→ D est redondante ainsi que ACD −→ B;
+
+ Calculer { C , G }+
+ - Etape 1 : { C , G }
+  - CG -> BD donc CG -> B donc { C, G , B }
+  - BC -> D donc CG -> BC -> D donc CG -> B -> D donc { C, G, B , D }
+  - Donc CG est redondant
+
+Calculer { A, C, D }+
+  - Etape 1 : { A, C, D}
+   - D -> EG donc { A , C , D , G }
+   - CG -> B donc { A , C , D , G , E }
+
+
+### 6. En déduire une couverture minimale ayant moins d'éléments que la première.
+
+Couverture minimale optimale : { AB -> C, C-> A , BC -> D, D -> E , D -> G, BE -> C, CG -> B , CE -> G }
+
+
+
+ 
+
   
 
 
