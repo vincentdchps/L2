@@ -11,7 +11,7 @@ use Tests\TestCase;
 class BookTest extends TestCase
 {
     use RefreshDatabase;
-
+                                               
     public function test_auth_user_can_access_books_page()
     {
         $user = User::factory()->create();
