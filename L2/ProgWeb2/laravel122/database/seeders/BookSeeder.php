@@ -16,6 +16,6 @@ class BookSeeder extends Seeder
         for ($i=0; $i<50; $i++) {
             $authorId = Author::inRandomOrder()->first()->id;
             Book::factory()->create(['author_id' => $authorId]);
-        }
+        }   
     }
 }
