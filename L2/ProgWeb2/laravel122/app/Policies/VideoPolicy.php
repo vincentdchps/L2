@@ -13,7 +13,7 @@ class VideoPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array(auth()->user()->role, ['admin', 'su']);
+        return in_array($user->role, ['admin', 'su']);
     }
 
     /**
@@ -21,7 +21,7 @@ class VideoPolicy
      */
     public function create(User $user): bool
     {
-        return in_array(auth()->user()->role, ['admin', 'su']);
+        return in_array($user->role, ['admin', 'su']);
     }
 
     /**
@@ -29,7 +29,7 @@ class VideoPolicy
      */
     public function update(User $user, Video $video): bool
     {
-        return in_array(auth()->user()->role, ['admin', 'su']);
+        return in_array($user->role, ['admin', 'su']);
     }
 
     /**
@@ -37,6 +37,6 @@ class VideoPolicy
      */
     public function delete(User $user, Video $video): bool
     {
-        return auth()->user()->role === 'su';
+        return $user->role === 'su';
     }
 }
