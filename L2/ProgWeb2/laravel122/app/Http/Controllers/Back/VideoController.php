@@ -56,9 +56,11 @@ class VideoController extends Controller
     }
 
     public function store(StoreVideoRequest $request)
+   // public function store( Request $request)
     {
-        Gate::authorize('create', Video::class);
 
+        Gate::authorize('create', Video::class);
+        // dd($request->all());
         $inputs = $request->safe()->except(['image']);
 
         Video::create($inputs);
