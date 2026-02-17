@@ -21,7 +21,7 @@ class BookFactory extends Factory
         return [
             'title' => fake()->sentence($nbWords = 3, $variableNbWords = true),
             'description' => fake()->text($maxNbChars = 200),
-            'image' => 'https://picsum.photos/seed/',
+            'image' => 'https://picsum.photos/seed/' . fake()->unique()->numberBetween(1, 100) . '/1200/1600',
             'page' => rand(50, 300),
             'price' => rand(30, 100),
             'is_published' => rand(0, 1),

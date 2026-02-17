@@ -15,7 +15,8 @@
                             <th>Auteur</th>
                             <th>Pages</th>
                             <th>Prix</th>
-                            <th>Actions</th>
+                            <th>Actions</th>$
+                            <th>image</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,6 +42,14 @@
                                     <button class="btn btn-circle btn-text btn-sm" aria-label="Details">
                                         <span class="icon-[tabler--eye] size-5"></span>
                                     </button>
+                                </td>
+
+                                <td>
+                                    @if($book->image)
+                                        <img src="{{ $book->image }}" alt="Book Image" class="size-9 rounded-full">
+                                    @else
+                                        <span class="text-base-content/50">-</span>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
