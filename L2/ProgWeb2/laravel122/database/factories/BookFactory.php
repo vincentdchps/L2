@@ -21,7 +21,7 @@ class BookFactory extends Factory
         return [
             'title' => fake()->sentence($nbWords = 3, $variableNbWords = true),
             'description' => fake()->text($maxNbChars = 200),
-            'image' => 'book.webp',
+            'image' => 'https://picsum.photos/seed/',
             'page' => rand(50, 300),
             'price' => rand(30, 100),
             'is_published' => rand(0, 1),

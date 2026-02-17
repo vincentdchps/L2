@@ -1,79 +1,61 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-zinc-800 dark:text-zinc-200 leading-tight">
-            {{ __('Videos') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-zinc-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-zinc-900 dark:text-zinc-100">
+@section('content')
+    <div class="space-y-6">
+        <div class="rounded-box shadow-base-300/10 bg-base-100 w-full pb-2 shadow-md">
+            <div class="flex items-center justify-between p-4 border-b border-base-200">
+                <h2 class="text-lg font-semibold">{{ __('Videos') }}</h2>
+                <a href="{{ route('admin.videos.create') }}" class="btn btn-sm btn-primary" title="{{ __('New') }}">
+                    {{ __('New') }}
+                </a>
+            </div>
 
-
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
-                            <thead
-                                class="text-xs text-zinc-700 uppercase bg-zinc-50 dark:bg-zinc-700 dark:text-zinc-400">
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{{ __('Image') }}</th>
+                            <th>{{ __('Title') }}</th>
+                            <th>{{ __('Description') }}</th>
+                            <th>{{ __('Price') }}</th>
+                            <th>{{ __('Published') }}</th>
+                            <th>{{ __('Actions') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($videos as $video)
                             <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Id
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Image
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Title
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Description
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Price
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Published
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <a class="btn-new ml-3 mb-2"
-                                       href="{{ route('admin.videos.create') }}"
-                                       title="{{ __('New') }}">{{ __('New') }}</a>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($videos as $video)
-                                <tr class="odd:bg-white odd:dark:bg-zinc-900 even:bg-zinc-50 even:dark:bg-zinc-800 border-b dark:border-zinc-700 border-zinc-200">
-                                    <th scope="row"
-                                        class="px-6 py-4 ">
-                                        {{ $video->id }}
-                                    </th>
-                                    <td class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
-                                        
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
-                                        {{ $video->title }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-zinc-900 dark:text-white">
-                                        {{ Str::words($video->description, 20, '...') }}
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
-                                        {{ $video->price }}€
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('admin.videos.published', $video->id) }}" title="active">
-                                            <i class="fa-solid {{ $video->is_published ? 'text-green-600' : 'text-red-600' }} fa-check"></i>
+                                <td>
+                                    @if($video->image)
+                                        <img src="{{ asset('storage/' . $video->image) }}" alt="{{ $video->title }}" class="h-10 w-10 rounded object-cover" />
+                                    @else
+                                        <span class="text-base-content/50">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="font-bold">{{ $video->title }}</div>
+                                </td>
+                                <td>
+                                    {{ Str::words($video->description, 15, '...') }}
+                                </td>
+                                <td>{{ $video->price }}€</td>
+                                <td>
+                                    <input type="checkbox" 
+                                           class="checkbox" 
+                                           @checked($video->is_published)
+                                           disabled />
+                                </td>
+                                <td>
+                                    <div class="flex gap-2">
+                                        <a href="{{ route('admin.videos.edit', $video->id) }}" class="btn btn-xs btn-outline btn-primary" title="{{ __('Edit') }}">
+                                            {{ __('Edit') }}
                                         </a>
-                                    </td>
-                                    <td class="px-6 py-4 flex">
-                                        <a class="btn-std ml-3"
-                                           href="{{ route('admin.videos.edit', $video->id) }}"
-                                           title="{{ __('Edit') }}">Edit</a>
-                                        @if (auth()->user()->role === 'su')
-                                            <a class="btn-danger ml-3"
-                                               href=""
-                                               title="{{ __('Delete') }}"
-                                               onclick="event.preventDefault(); let result = confirm('{{ __('Are you sure you want to delete this item?') }}'); if (result) { document.getElementById('delete-{{ $video->id }}').submit(); }">{{ __('Delete') }}</a>
+                                        @if (auth()->user()->role === 'admin')
+                                            <button class="btn btn-xs btn-outline btn-error" 
+                                                    title="{{ __('Delete') }}"
+                                                    onclick="event.preventDefault(); let result = confirm('{{ __('For sure ?') }}'); if (result) { document.getElementById('delete-{{ $video->id }}').submit(); }">
+                                                {{ __('Delete') }}
+                                            </button>
                                             <form id="delete-{{ $video->id }}" hidden
                                                   action="{{ route('admin.videos.destroy', $video->id) }}"
                                                   method="POST">
@@ -81,21 +63,23 @@
                                                 @method('DELETE')
                                             </form>
                                         @endif
-
-                                    </td>
-                                </tr>
-                            @endforeach
-
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <div class="mt-4">
-                        {{ $videos->links() }}
-                    </div>
-                </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-8">
+                                    <p class="text-base-content/70">{{ __('No videos found.') }}</p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
+
+        <div class="mt-4">
+            {{ $videos->links() }}
+        </div>
     </div>
-</x-app-layout>
+@endsection
