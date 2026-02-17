@@ -28,6 +28,16 @@
                     @enderror
                 </div>
 
+                <div>
+                    <label class="label-text" for="userRole">Role*</label>
+                    <input type="text" name="role" placeholder="Enter role" class="input @error('role') input-error @enderror" id="userRole" value="{{ old('role', $user->role) }}" required />
+                    @error('role')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                
+
                 <div class="flex items-center gap-3 pt-2">
                     <button type="submit" class="btn btn-lg btn-primary btn-gradient">
                         Update User

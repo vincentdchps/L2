@@ -1,79 +1,79 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-zinc-800 dark:text-zinc-200 leading-tight">
-            {{ __('New Video') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-zinc-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-zinc-900 dark:text-zinc-100">
-                    <form method="POST" action="{{ route('admin.videos.store') }}" enctype="multipart/form-data">
-                        @csrf
-
-                        <!-- Title -->
-                        <div>
-                            <x-input-label for="title" :value="__('Title')"/>
-                            <x-text-input id="title" class="block mt-1 w-full" type="text" name="title"
-                                          :value="old('title')" required autofocus autocomplete="title"/>
-                            <x-input-error :messages="$errors->get('title')" class="mt-2"/>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mt-4">
-                            <x-input-label for="description" :value="__('Description')"/>
-                            <textarea id="description"
-                                      class="border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 focus:border-slate-500 dark:focus:border-slate-600 focus:ring-slate-500 dark:focus:ring-slate-600 rounded-md shadow-sm' block mt-1 w-full"
-                                      name="description"
-                                      autocomplete="description">{{ old('description') }}</textarea>
-                            <x-input-error :messages="$errors->get('description')" class="mt-2"/>
-                        </div>
-
-                        <!-- Image -->
-                        <div class="mt-4">
-                            <x-input-label for="image" :value="__('Image')"/>
-                            <x-text-input id="image" class="block mt-1 w-full" type="file" name="image"
-                                          :value="old('image')"
-                                          autocomplete="image"/>
-                            <x-input-error :messages="$errors->get('image')" class="mt-2"/>
-                        </div>
-
-                        <!-- Year -->
-                        <div class="mt-4">
-                            <x-input-label for="year" :value="__('Year')"/>
-                            <x-text-input id="year" class="block mt-1 w-full" type="text" name="year"
-                                          :value="old('year')" required autocomplete="year"/>
-                            <x-input-error :messages="$errors->get('year')" class="mt-2"/>
-                        </div>
-
-                        <!-- Price -->
-                        <div class="mt-4">
-                            <x-input-label for="price" :value="__('Price')"/>
-                            <x-text-input id="price" class="block mt-1 w-full" type="text" name="price"
-                                          :value="old('price')" required autocomplete="price"/>
-                            <x-input-error :messages="$errors->get('price')" class="mt-2"/>
-                        </div>
-
-                       <!-- is_published -->
-                        <div class="block mt-4">
-                            <label for="is_published" class="inline-flex items-center">
-                                <input id="is_published" type="checkbox"
-                                       class="rounded dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-zinc-800"
-                                       name="is_published" value="1" @checked(old('is_published', true))>
-                                <span class="ms-2 text-sm text-zinc-600 dark:text-zinc-400">Is published</span>
-                            </label>
-                        </div>
-
-                        <div class="flex items-center justify-end mt-4">
-                            <x-primary-button class="ms-4">
-                                {{ __('Save') }}
-                            </x-primary-button>
-                        </div>
-                    </form>
-
-                </div>
+@section('content')
+    <div class="space-y-6">
+        <div class="bg-base-100 shadow-base-300/20 w-full space-y-6 rounded-xl p-6 shadow-md lg:p-8">
+            <div>
+                <h3 class="text-base-content mb-1.5 text-2xl font-semibold">{{ __('New Video') }}</h3>
+                <p class="text-base-content/80">{{ __('Create a new video') }}</p>
             </div>
+
+            <form action="{{ route('admin.videos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+
+                <!-- Title -->
+                <div>
+                    <label class="label-text" for="title">{{ __('Title') }}*</label>
+                    <input type="text" name="title" id="title" placeholder="{{ __('Enter title') }}" class="input @error('title') input-error @enderror" value="{{ old('title') }}" required autofocus />
+                    @error('title')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="label-text" for="description">{{ __('Description') }}</label>
+                    <textarea id="description" name="description" placeholder="{{ __('Enter description') }}" class="textarea textarea-bordered @error('description') textarea-error @enderror w-full"></textarea>
+                    @error('description')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Image -->
+                <div>
+                    <label class="label-text" for="image">{{ __('Image') }}</label>
+                    <input type="file" name="image" id="image" class="file-input file-input-bordered w-full @error('image') file-input-error @enderror" />
+                    @error('image')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Year -->
+                <div>
+                    <label class="label-text" for="year">{{ __('Year') }}*</label>
+                    <input type="text" name="year" id="year" placeholder="{{ __('Enter year') }}" class="input @error('year') input-error @enderror" value="{{ old('year') }}" required />
+                    @error('year')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Price -->
+                <div>
+                    <label class="label-text" for="price">{{ __('Price') }}*</label>
+                    <input type="text" name="price" id="price" placeholder="{{ __('Enter price') }}" class="input @error('price') input-error @enderror" value="{{ old('price') }}" required />
+                    @error('price')
+                    <span class="text-error text-sm mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- is_published -->
+                <div>
+                    <label class="label cursor-pointer gap-3">
+                        <input type="checkbox" name="is_published" value="1" class="checkbox" @checked(old('is_published', true)) />
+                        <span class="label-text">{{ __('Is published') }}</span>
+                    </label>
+                </div>
+
+                <div class="flex items-center gap-3 pt-2">
+                    <button type="submit" class="btn btn-lg btn-primary btn-gradient">
+                        {{ __('Save') }}
+                    </button>
+
+                    <a href="{{ route('admin.videos.index') }}" class="btn btn-lg btn-outline">
+                        {{ __('Cancel') }}
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
-</x-app-layout>
+@endsection
