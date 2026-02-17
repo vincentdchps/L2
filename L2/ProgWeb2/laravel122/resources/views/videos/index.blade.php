@@ -26,7 +26,13 @@
                         @forelse ($videos as $video)
                             <tr>
                                 <td>{{ $video->title }}</td>
-                                <td><img src="{{ $video->image }}" alt="Video Image" class="w-16 h-16 object-cover rounded"></td>
+                               <td>
+                                    @if($video->image)
+                                        <img src="{{ $video->image }}" alt="Video Image" class="size-9 rounded-full">
+                                    @else
+                                        <span class="text-base-content/50">-</span>
+                                    @endif
+                                </td>
                                 <td>{{ $video->year }}</td>
                                 <td>{{ $video->price }}</td>
                                 <td>{{ $video->is_published ? 'Yes' : 'No' }}</td>

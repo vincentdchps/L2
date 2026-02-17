@@ -25,9 +25,9 @@
                     <tbody>
                         @forelse ($videos as $video)
                             <tr>
-                                <td>
+                                 <td>
                                     @if($video->image)
-                                        <img src="{{ asset('storage/' . $video->image) }}" alt="{{ $video->title }}" class="h-10 w-10 rounded object-cover" />
+                                        <img src="{{ $video->image }}" alt="Video Image" class="size-9 rounded-full">
                                     @else
                                         <span class="text-base-content/50">-</span>
                                     @endif
