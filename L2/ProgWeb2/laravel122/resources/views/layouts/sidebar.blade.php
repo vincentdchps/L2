@@ -63,6 +63,13 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="space-y-1">
+                                <li>
+                                    <a href="{{ route('admin.videos.index') }}" @class(['inline-flex w-full items-center px-2', 'menu-active' => request()->routeIs('admin.videos.*')])>
+                                        <span>Admin videos</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </li>
 
