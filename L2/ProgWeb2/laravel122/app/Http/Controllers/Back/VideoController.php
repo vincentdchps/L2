@@ -63,6 +63,10 @@ class VideoController extends Controller
         // dd($request->all());
         $inputs = $request->safe()->except(['image']);
 
+        if ($request->hasFile('image')) {
+        $inputs['image'] = $request->file('image')->store('images', 'public');
+}
+
         Video::create($inputs);
 
         return redirect()->route('admin.videos.index');
