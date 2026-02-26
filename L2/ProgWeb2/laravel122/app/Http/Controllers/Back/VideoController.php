@@ -32,9 +32,16 @@ class VideoController extends Controller
         $video = Video::find($id);
         Gate::authorize('update', $video);
 
-        $inputs = $request->safe()->except(['image']);
+       $inputs = $request->safe()->except(['image']);
 
-        $video->update($inputs);
+if ($request->hasFile('image')) {
+    if ($video->image) {
+        Storage::disk('public')->delete($video->image);
+    }
+    $inputs['image'] = $request->file('image')->store('images', 'public');
+}
+
+$video->update($inputs);;
 
         return redirect()->route('admin.videos.index');
     }
