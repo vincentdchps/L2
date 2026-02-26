@@ -11,7 +11,7 @@
             <div class="text-base-content border-base-content/20 flex flex-col items-center gap-4 border-b px-4 py-6">
                 <div class="avatar">
                     <div class="size-17 rounded-full">
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->firstname) }}&background=random"
+                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->firstname }}+{{ auth()->user()->name }}&background=dark&color=fff&size=128"
                             alt="avatar" />
                     </div>
                 </div>
