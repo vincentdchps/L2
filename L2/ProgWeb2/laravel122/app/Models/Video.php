@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,4 +18,10 @@ class Video extends Model
     'price',
     'is_published',
 ];
+
+public function scopePublished(Builder $query): void
+{
+    $query->where('is_published', true);
+}
+
 }
