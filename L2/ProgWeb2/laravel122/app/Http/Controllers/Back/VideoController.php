@@ -83,6 +83,10 @@ $video->update($inputs);;
         $video = Video::find($id);
         Gate::authorize('delete', $video);
 
+        if ($video->image) {
+    Storage::disk('public')->delete($video->image);
+}
+
         $video->delete();
         return redirect()->route('admin.videos.index');
     }
