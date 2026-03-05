@@ -19,6 +19,9 @@ class VideoController extends Controller
         $videos = Video::latest('id')->paginate();
 
         return view('back.videos.index', compact('videos'));
+
+        
+        $videos = Video::latest()->paginate(); 
     }
 
     public function edit(int $id) {

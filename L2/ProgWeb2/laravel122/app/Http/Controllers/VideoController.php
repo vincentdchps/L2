@@ -12,5 +12,7 @@ class VideoController extends Controller
     $videos = \App\Models\Video::paginate(10);
     
     return view('videos.index', compact('videos'));
+
+    $videos =  \App\Models\Video::published()->latest()->get();
 }
 }
