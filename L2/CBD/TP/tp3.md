@@ -144,3 +144,16 @@ SELECT idCinema, numSalle, dateProjection, horaireProjection, numFilm
 FROM cinema_1nf;
 
 ## Partie IV – Critique
+
+
+### 1. Repérez, dans les données initiales (de la relation en 1NF), les redondances et problèmes de modélisation
+
+La table en première forme normale regroupe toutes les données au même endroit, ce qui provoque des redondances. En effet, les informations du cinéma comme le nom, l'adresse ou le téléphone sont répétées à chaque fois qu'un film est programmé. De même, les détails du film comme le réalisateur, l'année ou la durée sont copiés sur chaque ligne d'horaire. Cette modélisation empêche de gérer les films et les cinémas de manière indépendante et cause des anomalies de modification, d'insertion et de suppression. Il y a donc un risque d'incohérence dans la base de donnée. 
+
+
+### 2. Pour chaque problème, écrire des commandes de mise à jour sur le schéma en 1NF, qui causent des anomalies et montrer que le SGBD ne signale pas d’erreur.
+
+Si on modifie le genre du film 1 uniquement pour le cinéma 2, le SGBD exécute la commande sans erreur. Le film se retrouve donc avec le genre "Action" au cinéma 2 et "Science-Fiction" au cinéma 1, créant une incohérence
+
+UPDATE cinema_1nf SET genre = 'Action' WHERE numFilm = 1 AND idCinema = 2;
+
