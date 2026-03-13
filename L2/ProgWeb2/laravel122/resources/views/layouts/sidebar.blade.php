@@ -63,6 +63,7 @@
                                     </a>
                                 </li>
                             </ul>
+                             @if (auth()->user()->role === 'admin')
                             <ul class="space-y-1">
                                 <li>
                                     <a href="{{ route('admin.videos.index') }}" @class(['inline-flex w-full items-center px-2', 'menu-active' => request()->routeIs('admin.videos.*')])>
@@ -70,6 +71,7 @@
                                     </a>
                                 </li>
                             </ul>
+                                @endif
                         </div>
                     </li>
 
