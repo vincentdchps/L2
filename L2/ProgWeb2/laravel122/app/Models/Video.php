@@ -19,9 +19,16 @@ class Video extends Model
     'is_published',
 ];
 
-public function scopePublished(Builder $query): void
+protected static function booted(): void
 {
-    $query->where('is_published', true);
+    static::addGlobalScope('published', function (Builder $query) {
+        $query->where('is_published', true);
+    });
+}
+
+public function scopeWithoutPublished(Builder $query): Builder
+{
+    return $query->withoutGlobalScopes();
 }
 
 }
