@@ -166,3 +166,101 @@ public enum Planete {
     }
 }
 ```
+
+
+## Exercice 4 : 
+
+```java
+package com.covoiturage.utils;
+
+/**
+ * Service utilitaire responsable de la génération des codes QR.
+ * Utilisé principalement pour générer les billets virtuels des passagers après réservation.
+ * * @author TonNom
+ * @version 1.0
+ */
+public class GenerateurQRCode {
+
+    /**
+     * Génère une image de QR Code à partir d'une chaîne de caractères (ex: un ID de réservation).
+     * <p>
+     * <b>Exemple de rendu :</b><br>
+     * * <img src="doc-files/qrcode_exemple.png" alt="Exemple de QR Code généré" width="150" height="150">
+     * </p>
+     * * @param donnees Le texte ou l'URL à encoder dans le QR Code. Ne doit pas être null.
+     * @param largeur La largeur souhaitée de l'image en pixels.
+     * @param hauteur La hauteur souhaitée de l'image en pixels.
+     * @return Un tableau d'octets (byte[]) représentant l'image au format PNG.
+     * @throws IllegalArgumentException si les données sont nulles ou vides.
+     */
+    public byte[] generer(String donnees, int largeur, int hauteur) throws IllegalArgumentException {
+        if (donnees == null || donnees.trim().isEmpty()) {
+            throw new IllegalArgumentException("Les données du QR Code ne peuvent pas être vides.");
+        }
+==
+        return new byte[0]; // Bouchon pour la compilation
+    }
+}
+
+
+```
+
+
+## Exercice 5 
+
+```java
+package com.covoiturage.stats;
+
+import java.util.List;
+
+/**
+ * Service de calculs statistiques pour l'application de covoiturage.
+ * Permet d'analyser les notes des conducteurs et les tendances de prix.
+ */
+public class Statistiques {
+
+    /**
+     * Calcule la médiane d'une liste de prix de trajets.
+     * La médiane est la valeur séparant la moitié supérieure de la moitié inférieure d'un échantillon.
+     * <p>
+     * <b>Exemples d'exécution :</b>
+     * <table border="1" cellpadding="5" style="border-collapse: collapse;">
+     * <caption>Résultats attendus selon l'entrée</caption>
+     * <tr>
+     * <th>Valeurs en entrée (List&lt;Double&gt;)</th>
+     * <th>Résultat attendu (Médiane)</th>
+     * <th>Explication</th>
+     * </tr>
+     * <tr>
+     * <td>[10.0, 15.0, 20.0]</td>
+     * <td>15.0</td>
+     * <td>Taille impaire, on prend la valeur centrale.</td>
+     * </tr>
+     * <tr>
+     * <td>[10.0, 20.0, 30.0, 40.0]</td>
+     * <td>25.0</td>
+     * <td>Taille paire, moyenne des deux valeurs centrales (20+30)/2.</td>
+     * </tr>
+     * <tr>
+     * <td>[] (Liste vide)</td>
+     * <td>Double.NaN</td>
+     * <td>Impossible de calculer une médiane sans données.</td>
+     * </tr>
+     * </table>
+     * </p>
+     * * @param prix Une liste de nombres décimaux représentant les prix.
+     * @return La valeur médiane, ou {@code Double.NaN} si la liste est vide.
+     * @throws NullPointerException si la liste passée en paramètre est nulle.
+     */
+    public double calculerMediane(List<Double> prix) {
+        if (prix == null) {
+            throw new NullPointerException("La liste de prix ne peut pas être nulle.");
+        }
+        if (prix.isEmpty()) {
+            return Double.NaN;
+        }
+        
+        return 0.0; // Bouchon
+    }
+}
+```
