@@ -264,3 +264,194 @@ public class Statistiques {
     }
 }
 ```
+
+## Exercice 6 
+
+```java
+/**
+ * Utilitaire mathématique permettant la résolution d'équations du second degré
+ * de la forme ax² + bx + c = 0.
+ * * @author TonNom
+ * @version 1.0
+ */
+public class Exo6 {
+
+    /**
+     * Méthode principale exécutant un test de résolution.
+     * * @param args Les arguments de la ligne de commande (non utilisés ici).
+     */
+    public static void main(String[] args) {
+        resoudre(-2, 2, 3);
+    }
+
+    /**
+     * Calcule et affiche les solutions réelles de l'équation du second degré.
+     * * @param a Le coefficient de x² (doit être différent de 0).
+     * @param b Le coefficient de x.
+     * @param c Le terme constant.
+     */
+    public static void resoudre(double a, double b, double c) {
+        double d = delta(a, b, c);
+        
+        if (d < 0) {
+            System.out.println("pas de solutions");
+        }
+
+        if (d == 0.0) {
+            double s = -b / (2 * a);
+            System.out.println("une solution : " + s);
+        }
+
+        if (d > 0) {
+            double s1 = (-b - Math.sqrt(d)) / (2 * a);
+            double s2 = (-b + Math.sqrt(d)) / (2 * a);
+            System.out.println("solution 1 : " + s1);
+            System.out.println("solution 2 : " + s2);
+        }
+    }
+
+    /**
+     * Calcul delta de l'équation.
+     * * @param a Le coefficient de x².
+     * @param b Le coefficient de x.
+     * @param c Le terme constant.
+     * @return La valeur du discriminant (b² - 4ac).
+     */
+    private static double delta(double a, double b, double c) {
+        return (b * b - 4 * a * c);
+    }
+}
+```
+
+## Exercice 7 
+
+```java
+import java.util.Arrays;
+
+/**
+ * Représente un tableau d'entiers à deux dimensions avec des valeurs aléatoires.
+ * Permet d'effectuer diverses opérations de recherche et de comptage.
+ * <p>
+ * <b>Architecture de la classe (Diagramme UML) :</b><br>
+ * <img src="doc-files/classe.png" alt="Diagramme UML de Exo7" />
+ * </p>
+ * * @author TonNom
+ * @version 1.0
+ */
+public class Exo7 {
+
+    /** Le tableau d'entiers à deux dimensions. */
+    private int[][] tab;
+
+    /**
+     * Construit un tableau de dimensions spécifiées et le remplit
+     * avec des valeurs aléatoires comprises entre 1 et 10.
+     * * @param nbLignes Le nombre de lignes du tableau.
+     * @param nbColonnes Le nombre de colonnes du tableau.
+     */
+    public Exo7(int nbLignes, int nbColonnes) {
+        tab = new int[nbLignes][nbColonnes];
+
+        for (int l = 0; l < nbLignes; l++) {
+            for (int c = 0; c < nbColonnes; c++) {
+                tab[l][c] = (int) (Math.random() * 10) + 1;
+            }
+        }
+    }
+
+    /**
+     * Affiche le contenu du tableau dans la console.
+     */
+    public void affiche() {
+        System.out.println(Arrays.deepToString(tab));
+    }
+
+    /**
+     * Recherche la présence d'un entier dans le tableau.
+     * * @param n L'entier à rechercher.
+     * @return {@code true} si l'entier est présent, {@code false} sinon.
+     */
+    public boolean recherche1(int n) {
+        boolean trouve = false;
+        int l = 0;
+        
+        while (l < tab.length) {
+            int c = 0;
+            while (c < tab[0].length) {
+                if (tab[l][c] == n) {
+                    trouve = true;
+                }
+                c++;
+            }
+            l++;
+        }
+        return trouve;
+    }
+
+    /**
+     * Compte le nombre d'occurrences d'un entier dans le tableau.
+     * * @param n L'entier à compter.
+     * @return Le nombre d'occurrences trouvées.
+     */
+    public int compte(int n) {
+        int nombre = 0;
+        for (int[] ligne : tab) { 
+            for (int elem : ligne) { 
+                if (elem == n) {
+                    nombre++;
+                }
+            } 
+        }
+        return nombre;      
+    }
+
+    /**
+     * Localise toutes les positions d'un entier dans le tableau.
+     * * @param n L'entier à localiser.
+     * @return Un tableau 2D contenant les coordonnées [ligne, colonne] de chaque occurrence.
+     */
+    public int[][] localise(int n) {
+        int nombre = compte(n);
+        int[][] pos = new int[nombre][2];
+        int k = 0;
+        int l = 0;
+        
+        for (int[] ligne : tab) {
+            int c = 0;
+            for (int elem : ligne) {
+                if (elem == n) {
+                    pos[k][0] = l;
+                    pos[k][1] = c;
+                    k++;
+                }
+                c++;
+            }
+            l++;
+        }
+        return pos;
+    }
+
+    /**
+     * Point d'entrée pour tester la classe.
+     * * @param args Arguments de la ligne de commande (non utilisés).
+     */
+    public static void main(String[] args) {
+        Exo7 t = new Exo7(3, 5);
+        t.affiche();
+
+        if (t.recherche1(5)) {
+            System.out.println(" -> 5 est dans le tableau");
+        } else {
+            System.out.println(" -> 5 n'est pas dans le tableau");
+        }
+
+        if (t.recherche1(5)) {
+            System.out.println(" -> 5 est présent " + t.compte(5) + " fois");
+        }
+
+        if (t.recherche1(5)) {
+            System.out.println(" -> position(s) du 5 : " + Arrays.deepToString(t.localise(5)));
+        }
+    }
+}
+```
