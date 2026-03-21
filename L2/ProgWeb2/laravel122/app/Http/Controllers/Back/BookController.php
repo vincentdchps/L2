@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Back\UpdateBookRequest;
 use App\Http\Requests\Back\StoreBookRequest;
+use App\Notifications\BookDeleted;
 
 class BookController extends Controller
 {
@@ -84,16 +85,19 @@ class BookController extends Controller
 		return redirect()->route("admin.books.index");
 	}
 
-	public function destroy(int $id)
-	{
-		$book = Book::find($id);
-		Gate::authorize("delete", $book);
 
-		if ($book->image) {
+public function destroy(int $id)
+{
+	$book = Book::find($id);
+    Gate::authorize('delete', $book);
+
+    $book->author->notify(new BookDeleted($book->title));
+
+	if ($book->image) {
 			Storage::disk("public")->delete($book->image);
 		}
+    $book->delete();
 
-		$book->delete();
-		return redirect()->route("admin.books.index");
-	}
+    return redirect()->route('admin.books.index');
+}
 }
