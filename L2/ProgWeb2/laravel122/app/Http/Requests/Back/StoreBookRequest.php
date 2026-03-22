@@ -5,7 +5,7 @@ namespace App\Http\Requests\Back;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User ;
 
-class StoreVideoRequest extends FormRequest
+class StoreBookRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
