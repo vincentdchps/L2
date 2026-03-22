@@ -13,85 +13,87 @@ use App\Http\Requests\Back\StoreVideoRequest;
 
 class VideoController extends Controller
 {
-    public function index()
-    {
-        Gate::authorize('view-any', Video::class);
-        $videos = Video::latest('id')->paginate();
+	public function index()
+	{
+		Gate::authorize("view-any", Video::class);
+		$videos = Video::withoutPublished()
+			->latest("id")
+			->paginate();
 
-        return view('back.videos.index', compact('videos'));
+		return view("back.videos.index", compact("videos"));
+	}
 
-        
-        $videos = Video::latest()->paginate(); 
-    }
+	public function edit(int $id)
+	{
+		$video = Video::find($id);
 
-    public function edit(int $id) {
-        $video = Video::find($id);
+		return view("back.videos.edit", compact("video"));
+	}
 
-        return view('back.videos.edit', compact('video'));
-    }
+	public function update(UpdateVideoRequest $request, int $id)
+	{
+		$video = Video::find($id);
+		Gate::authorize("update", $video);
 
-    public function update(UpdateVideoRequest $request, int $id)
-    {
-        $video = Video::find($id);
-        Gate::authorize('update', $video);
+		$inputs = $request->safe()->except(["image"]);
 
-       $inputs = $request->safe()->except(['image']);
+		if ($request->hasFile("image")) {
+			if ($video->image && Storage::exists($video->image)) {
+				Storage::delete($video->image);
+			}
+			$inputs["image"] = $request
+				->file("image")
+				->store("images", "public");
+		}
 
-if ($request->hasFile('image')) {
-    if ($video->image) {
-        Storage::disk('public')->delete($video->image);
-    }
-    $inputs['image'] = $request->file('image')->store('images', 'public');
-}
+		$video->update($inputs);
 
-$video->update($inputs);;
+		return redirect()->route("admin.videos.index");
+	}
 
-        return redirect()->route('admin.videos.index');
-    }
+	public function create()
+	{
+		return view("back.videos.create");
+	}
 
-    public function create()
-    {
-        return view('back.videos.create');
-    }
+	public function published(int $id)
+	{
+		$video = Video::find($id);
+		Gate::authorize("update", $video);
 
-    public function published(int $id)
-    {
-        $video = Video::find($id);
-        Gate::authorize('update', $video);
+		$video->is_published = !$video->is_published;
+		$video->save();
 
-        $video->is_published = !$video->is_published;
-        $video->save();
+		return redirect()->back();
+	}
 
-        return redirect()->back();
-    }
+	public function store(StoreVideoRequest $request)
+	{
+		Gate::authorize("create", Video::class);
+		// dd($request->all());
+		$inputs = $request->safe()->except(["image"]);
 
-    public function store(StoreVideoRequest $request)
-   // public function store( Request $request)
-    {
+		if ($request->hasFile("image")) {
+			$inputs["image"] = $request
+				->file("image")
+				->store("images", "public");
+		}
 
-        Gate::authorize('create', Video::class);
-        // dd($request->all());
-        $inputs = $request->safe()->except(['image']);
+		Video::create($inputs);
 
-        if ($request->hasFile('image')) {
-        $inputs['image'] = $request->file('image')->store('images', 'public');
-}
+		return redirect()->route("admin.videos.index");
+	}
 
-        Video::create($inputs);
+	public function destroy(int $id)
+	{
+		$video = Video::find($id);
+		Gate::authorize("delete", $video);
 
-        return redirect()->route('admin.videos.index');
-    }
+		if ($video->image) {
+			Storage::disk("public")->delete($video->image);
+		}
 
-    public function destroy(int $id) {
-        $video = Video::find($id);
-        Gate::authorize('delete', $video);
-
-        if ($video->image) {
-    Storage::disk('public')->delete($video->image);
-}
-
-        $video->delete();
-        return redirect()->route('admin.videos.index');
-    }
-   
+		$video->delete();
+		return redirect()->route("admin.videos.index");
+	}
 }
