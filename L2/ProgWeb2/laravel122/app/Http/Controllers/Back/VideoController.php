@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Back\UpdateVideoRequest;
 use App\Http\Requests\Back\StoreVideoRequest;
+use App\Notifications\ItemCreated;
 
 class VideoController extends Controller
 {
@@ -79,7 +80,14 @@ class VideoController extends Controller
 				->store("images", "public");
 		}
 
-		Video::create($inputs);
+		$video = Video::create($inputs);
+
+		$superUser = auth()->user()->where('role', 'su')->first();
+
+    if ($superUser) {
+        $editUrl = route('admin.videos.edit', $video->id);
+        $superUser->notify(new ItemCreated('vidéo', $video->title, $editUrl));
+    }
 
 		return redirect()->route("admin.videos.index");
 	}
