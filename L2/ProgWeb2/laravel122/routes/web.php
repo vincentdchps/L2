@@ -28,6 +28,8 @@ Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 
 Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
 
+Route::apiResource('books', BookController::class)->only(['index', 'show', 'store']);
+
 
 
 });
@@ -38,6 +40,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    Route::middleware('user')->group(function () {
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
+    });
 
     Route::middleware('is_admin')->name('admin.')->group(function () {
         Route::get('/admin/videos', [BackVideoController::class, 'index'])->name('videos.index');
