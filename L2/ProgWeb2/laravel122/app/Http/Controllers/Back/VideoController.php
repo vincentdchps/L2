@@ -82,11 +82,11 @@ class VideoController extends Controller
 
 		$video = Video::create($inputs);
 
-		$superUser = auth()->user()->where('role', 'su')->first();
+		$su = auth()->user()->where('role', 'su')->first();
 
-    if ($superUser) {
+    if ($su) {
         $editUrl = route('admin.videos.edit', $video->id);
-        $superUser->notify(new ItemCreated('vidéo', $video->title, $editUrl));
+        $su->notify(new ItemCreated('vidéo', $video->title, $editUrl));
     }
 
 		return redirect()->route("admin.videos.index");

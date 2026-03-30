@@ -36,7 +36,7 @@ class ContactController extends Controller
         'content' => $validated['message'],
     ];
 
-    $suUsers = User::where('role', 'su')->get();
+    $suUsers = auth()->user()->where('role', 'su')->get();
 
     foreach ($suUsers as $su) {
         Mail::to($su->email)->send(new ContactMessage($contact));
