@@ -11,13 +11,12 @@
             Nouvelle demande de contact
         </h2>
         
-        <p><strong>Expéditeur :</strong> {{ $sender->firstname }} {{ $sender->name }}</p>
-        <p><strong>Email de contact :</strong> {{ $sender->email }}</p>
-        <p><strong>Sujet :</strong> {{ $title }}</p>
+        <p><strong>Expéditeur :</strong> {{ $contact['name'] }}</p>
+        <p><strong>Sujet :</strong> {{ $contact['title'] }}</p>
         
         <div style="background-color: #f7fafc; padding: 15px; border-radius: 5px; margin-top: 20px;">
             <h4 style="margin-top: 0; color: #4a5568;">Message :</h4>
-            <p>{!! nl2br(e($content)) !!}</p>
+            <p>{!! nl2br(e($contact['content'])) !!}</p>
         </div>
 
         <p style="margin-top: 30px; font-size: 0.9em; color: #718096;">
