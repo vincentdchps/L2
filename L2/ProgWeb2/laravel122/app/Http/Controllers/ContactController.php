@@ -16,7 +16,7 @@ class ContactController extends Controller
         if (auth()->user()->role !== 'user') {
             abort(403, 'Accès réservé aux utilisateurs standards.');
         }
-        return view('front.contact'); // La vue avec ton formulaire HTML (titre, message)
+        return view('contact-form'); // La vue du formulaire
     }
 
    public function submit(Request $request)
@@ -31,7 +31,7 @@ class ContactController extends Controller
     ]);
 
     // 1. On fabrique le tableau $contact exact que le Mailable attend
-    $contactData = [
+    $contact = [
         'name' => auth()->user()->firstname . ' ' . auth()->user()->name,
         'title' => $validated['title'],
         'content' => $validated['message'],
@@ -41,7 +41,7 @@ class ContactController extends Controller
 
     // 2. On passe le tableau unique dans le constructeur
     foreach ($suUsers as $su) {
-        Mail::to($su->email)->send(new ContactMessage($contactData));
+        Mail::to($su->email)->send(new ContactMessage($contact));
     }
 
     return redirect()->back()->with('success', 'Votre message a bien été envoyé aux administrateurs.');
