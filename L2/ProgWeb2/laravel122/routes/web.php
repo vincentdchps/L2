@@ -15,7 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::middleware(['auth'])->group(function () {
+Route::get('/mail/contact-preview', function () {
+    $contact = [
+        'name' => 'Jean Dupont',
+        'title' => 'Demande importante',
+        'content' => 'Ceci est un message de test pour vérifier le rendu du mail'
+    ];
+    
+    return view('mails.contact', ['contact' => $contact]);
+})->name('mail.preview');
+
+Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard', ['title' => 'Dashboard']);
     })->name('dashboard');
