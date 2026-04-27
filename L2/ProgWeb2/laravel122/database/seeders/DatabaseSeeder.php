@@ -25,6 +25,17 @@ class DatabaseSeeder extends Seeder
             AuthorSeeder::class,
             BookSeeder::class,
         ]);
+
+        \App\Models\User::factory()->create([
+    'email' => 'admin@admin.test',
+    'role' => 'admin',
+]);
+
+\App\Models\User::factory()->create([
+    'email' => 'su@su.test',
+    'role' => 'su',
+]);
+
     }
 }
 
